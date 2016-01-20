@@ -3,6 +3,7 @@
 using OJS.Workers.Common;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Globalization;
 
 public class NumbersOnlyChecker : IChecker
 {
@@ -30,12 +31,24 @@ public class NumbersOnlyChecker : IChecker
             };
         }
 
-        // Scan for differences line by line
+        // Scan for differences line by line (number by number)
         for (int i = 0; i < receivedNumbers.Length; i++)
         {
-            if (receivedNumbers[i] != expectedNumbers[i])
+            bool equalNums;
+            try
             {
-                // Numbers do not match --> incorrect result
+                var numReceived = double.Parse(receivedNumbers[i], CultureInfo.InvariantCulture);
+                var numExpected = double.Parse(expectedNumbers[i], CultureInfo.InvariantCulture);
+                equalNums = Math.Abs(numReceived - numExpected) < 0.001;
+            }
+            catch (Exception)
+            {
+                equalNums = false;
+            }
+
+            if (!equalNums)
+            {
+                // Numbers do not match (or parse failed) --> incorrect result
                 return new CheckerResult()
                 {
                     IsCorrect = false,
@@ -61,12 +74,20 @@ public class NumbersOnlyChecker : IChecker
 
     private string[] ExtractLinesHoldingNumbers(string outputText)
     {
-        string numberPattern = "(-)?[0-9]+(.[0-9]+)?";
+        string numberPattern = @"(-)?[0-9]+(.[0-9]+)?";
         var numbers = new List<string>();
         var matches = Regex.Matches(outputText, numberPattern);
-        foreach (var match in matches)
+        foreach (var m in matches)
         {
-            numbers.Add(match.ToString());
+            Match match = (Match)m;
+            if ((match.Index == 0) || (!char.IsLetter(outputText[match.Index-1])))
+            {
+                if ((match.Index + match.Length == outputText.Length) ||
+                    (!char.IsLetter(outputText[match.Index + match.Length])))
+                {
+                    numbers.Add(match.Value);
+                }
+            }
         }
         return numbers.ToArray();
     }
