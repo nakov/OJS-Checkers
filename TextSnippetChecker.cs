@@ -1,15 +1,16 @@
 ﻿using System;
-
-using OJS.Workers.Common;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-public class PureTextSnippetChecker : IChecker
+using OJS.Workers.Common;
+
+public class TextSnippetChecker : IChecker
 {
     public CheckerResult Check(string inputData, string receivedOutput,
         string expectedOutput, bool isTrialTest)
     {
-        var receivedOutputCleaned = CleanText(receivedOutput);
-        var expectedOutputCleaned = CleanText(expectedOutput);
+        var receivedOutputCleaned = ExtractWordsAndNumbers(receivedOutput);
+        var expectedOutputCleaned = ExtractWordsAndNumbers(expectedOutput);
 
         if (! Regex.IsMatch(receivedOutputCleaned, @"\b" + expectedOutputCleaned + @"\b"))
         {
@@ -36,21 +37,18 @@ public class PureTextSnippetChecker : IChecker
         };
     }
 
-    private string CleanText(string text)
+    private string ExtractWordsAndNumbers(string text)
     {
-        // Replace any punctuation in the text with a single space
-        text = Regex.Replace(text, @"[,:.;'""`/\\<>?!@#$%^&*()+=_{}\[\]\-]", " ");
-
-        // Replace any whitespace sequences anywhere in the text with a single space
-        text = Regex.Replace(text, @"\s+", " ");
-
-        // Make all letters lower-case
-        text = text.ToLowerInvariant();
-
-        // Trim text
-        text = text.Trim();
-
-        return text;
+        // Skip all punctiation and whitespace and extract all words and numbers
+        var matches = Regex.Matches(text, @"((-)?[0-9]+(\.[0-9]+)?(e[+-]?[0-9]+)?)|\w+");
+        var wordsAndNumbers = new List<string>();
+        foreach (var m in matches)
+        {
+            Match match = (Match)m;
+            wordsAndNumbers.Add(match.Value);
+        }
+        var wordsAndNumbersStr = string.Join(" ", wordsAndNumbers).ToLowerInvariant();
+        return wordsAndNumbersStr;
     }
     
     public void SetParameter(string parameter)

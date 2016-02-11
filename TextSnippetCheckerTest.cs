@@ -1,28 +1,28 @@
 ﻿using System;
-
 using OJS.Workers.Common;
 
-class LastNumberCheckerTest
+class TextSnippetCheckerTest
 {
-    static void Main3()
+    static void Main()
     {
-        var checker = new LastNumberChecker();
+        var checker = new TextSnippetChecker();
 
         string userOutput =
-            "Моля въведете 3 числа:" + "\r\n" +
-            "num[0] =" + "\r\n" +
-            "num[1] =" + "\r\n" +
-            "num[2] =" + "\r\n" +
-            "Резултатът е: 500" + "\r\n" +
-            "Довиждане!" + "\r\n";
+            " Добър ден. Въведете 2 числа: " + "\r\n" +
+            " Търсена  сума:120.50 лв!!!" + "\r\n" +
+            "Довиждане. Мерси за участието!" + "\r\n";
         string expectedOutput =
-            "500";
+            " сума: 120.50 \r\n";
 
         TestChecker(checker, expectedOutput, userOutput);
 
         TestChecker(checker,
-            expectedOutput: "error",
-            userOutput: "Syntax Error!");
+            expectedOutput: "Yes." + "\r\n" + "5 + 3 = 8",
+            userOutput: "yes: 5+3=8");
+
+        TestChecker(checker,
+            expectedOutput: "No",
+            userOutput: "sorry, no solution is found");
     }
 
     private static void TestChecker(IChecker checker, string expectedOutput, string userOutput)

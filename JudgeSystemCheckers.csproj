@@ -48,9 +48,9 @@
   <ItemGroup>
     <Compile Include="LastNumberChecker.cs" />
     <Compile Include="LastNumberCheckerTest.cs" />
-    <Compile Include="PureTextSnippetCheckerTest.cs" />
+    <Compile Include="TextSnippetCheckerTest.cs" />
     <Compile Include="NumbersCheckerTest.cs" />
-    <Compile Include="PureTextSnippetChecker.cs" />
+    <Compile Include="TextSnippetChecker.cs" />
     <Compile Include="NumbersChecker.cs" />
     <Compile Include="AcceptEverythingChecker.cs" />
     <Compile Include="GuessTheNameChecker.cs" />
