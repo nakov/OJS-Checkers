@@ -3,7 +3,7 @@
 using OJS.Workers.Common;
 using System.Text.RegularExpressions;
 
-public class PureTextChecker : IChecker
+public class PureTextSnippetChecker : IChecker
 {
     public CheckerResult Check(string inputData, string receivedOutput,
         string expectedOutput, bool isTrialTest)
@@ -11,16 +11,16 @@ public class PureTextChecker : IChecker
         var receivedOutputCleaned = CleanText(receivedOutput);
         var expectedOutputCleaned = CleanText(expectedOutput);
 
-        if (receivedOutputCleaned != expectedOutputCleaned)
+        if (! Regex.IsMatch(receivedOutputCleaned, @"\b" + expectedOutputCleaned + @"\b"))
         {
-            // Different cleaned text --> incorrect result
+            // The expected output was not found in the user output --> incorrect result
             return new CheckerResult()
             {
                 IsCorrect = false,
                 ResultType = CheckerResultType.WrongAnswer,
                 CheckerDetails = new CheckerDetails()
                 {
-                    Comment = "The text in the user output is different than the text in the expected output.",
+                    Comment = "The user output text does not contain the expected output text.",
                     UserOutputFragment = receivedOutputCleaned,
                     ExpectedOutputFragment = expectedOutputCleaned
                 }
