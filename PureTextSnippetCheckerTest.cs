@@ -8,10 +8,10 @@ class PureTextSnippetCheckerTest
         string input = "";
         string userOutput =
             " Добър ден. Въведете 2 числа: " + "\r\n" +
-            " Търсена  сума =  500  лв." + "\r\n" +
+            " Търсена  сума:500 лв!!!" + "\r\n" +
             "Довиждане. Мерси за участието!" + "\r\n";
         string expectedOutput =
-            " сума = 500";
+            " сума: 500";
         var result = checker.Check(input, userOutput, expectedOutput, false);
         Console.WriteLine(result.IsCorrect);
         Console.WriteLine(result.CheckerDetails.Comment);
