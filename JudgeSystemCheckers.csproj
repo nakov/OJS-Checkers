@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LastNumberOnlyChecker.cs" />
+    <Compile Include="LastNumberOnlyCheckerTest.cs" />
     <Compile Include="PureTextSnippetCheckerTest.cs" />
     <Compile Include="NumbersOnlyCheckerTest.cs" />
     <Compile Include="PureTextSnippetChecker.cs" />

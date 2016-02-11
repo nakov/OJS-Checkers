@@ -10,9 +10,8 @@ public class NumbersOnlyChecker : IChecker
     public CheckerResult Check(string inputData, string receivedOutput,
         string expectedOutput, bool isTrialTest)
     {
-        string[] receivedNumbers = ExtractLinesHoldingNumbers(receivedOutput);
-        string[] expectedNumbers = expectedOutput.Split(
-            new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        string[] receivedNumbers = ExtractNumbersFromText(receivedOutput);
+        string[] expectedNumbers = ExtractNumbersFromText(expectedOutput);
 
         if (receivedNumbers.Length != expectedNumbers.Length)
         {
@@ -55,9 +54,9 @@ public class NumbersOnlyChecker : IChecker
                     ResultType = CheckerResultType.WrongAnswer,
                     CheckerDetails = new CheckerDetails()
                     {
-                        Comment = "Numbers at line #" + i + " do not match.",
-                        UserOutputFragment = receivedNumbers[i],
-                        ExpectedOutputFragment = expectedNumbers[i]
+                        Comment = String.Format("Numbers '{0}' and '{1}' at line #{2} do not match.", receivedNumbers[i], expectedNumbers[i], (i + 1)),
+                        UserOutputFragment = string.Join("\r\n", receivedNumbers),
+                        ExpectedOutputFragment = string.Join("\r\n", expectedNumbers)
                     }
                 };
             }
@@ -72,18 +71,18 @@ public class NumbersOnlyChecker : IChecker
         };
     }
 
-    private string[] ExtractLinesHoldingNumbers(string outputText)
+    private string[] ExtractNumbersFromText(string text)
     {
-        string numberPattern = @"(-)?[0-9]+(.[0-9]+)?";
+        string numberPattern = @"(-)?[0-9]+(\.[0-9]+)?(e[+-]?[0-9]+)?";
         var numbers = new List<string>();
-        var matches = Regex.Matches(outputText, numberPattern);
+        var matches = Regex.Matches(text, numberPattern);
         foreach (var m in matches)
         {
             Match match = (Match)m;
-            if ((match.Index == 0) || (!char.IsLetter(outputText[match.Index-1])))
+            if ((match.Index == 0) || (!char.IsLetter(text[match.Index-1])))
             {
-                if ((match.Index + match.Length == outputText.Length) ||
-                    (!char.IsLetter(outputText[match.Index + match.Length])))
+                if ((match.Index + match.Length == text.Length) ||
+                    (!char.IsLetter(text[match.Index + match.Length])))
                 {
                     numbers.Add(match.Value);
                 }
