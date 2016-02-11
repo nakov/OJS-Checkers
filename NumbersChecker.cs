@@ -5,13 +5,18 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Globalization;
 
-public class NumbersOnlyChecker : IChecker
+public class NumbersChecker : IChecker
 {
     public CheckerResult Check(string inputData, string receivedOutput,
         string expectedOutput, bool isTrialTest)
     {
-        string[] receivedNumbers = ExtractNumbersFromText(receivedOutput);
         string[] expectedNumbers = ExtractNumbersFromText(expectedOutput);
+        if (expectedNumbers.Length == 0)
+        {
+            return CompareTextOutput(receivedOutput, expectedOutput);
+        }
+
+        string[] receivedNumbers = ExtractNumbersFromText(receivedOutput);
 
         if (receivedNumbers.Length != expectedNumbers.Length)
         {
@@ -62,6 +67,38 @@ public class NumbersOnlyChecker : IChecker
             }
         }
         
+        // Correct result
+        return new CheckerResult()
+        {
+            IsCorrect = true,
+            ResultType = CheckerResultType.Ok,
+            CheckerDetails = new CheckerDetails()
+        };
+    }
+
+    private CheckerResult CompareTextOutput(string receivedOutput, string expectedOutput)
+    {
+        var receivedOutputCleaned = 
+            Regex.Replace(receivedOutput, @"\W+", " ").Trim().ToLowerInvariant();
+        var expectedOutputCleaned =
+            Regex.Replace(expectedOutput, @"\W+", " ").Trim().ToLowerInvariant();
+
+        if (!Regex.IsMatch(receivedOutputCleaned, @"\b" + expectedOutputCleaned + @"\b"))
+        {
+            // The expected output was not found in the user output --> incorrect result
+            return new CheckerResult()
+            {
+                IsCorrect = false,
+                ResultType = CheckerResultType.WrongAnswer,
+                CheckerDetails = new CheckerDetails()
+                {
+                    Comment = "The user output text does not contain the expected output text.",
+                    UserOutputFragment = receivedOutputCleaned,
+                    ExpectedOutputFragment = expectedOutputCleaned
+                }
+            };
+        }
+
         // Correct result
         return new CheckerResult()
         {

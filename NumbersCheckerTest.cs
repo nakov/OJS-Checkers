@@ -1,11 +1,12 @@
-﻿using System;
+﻿using OJS.Workers.Common;
+using System;
 
-class NumbersOnlyCheckerTest
+class NumbersCheckerTest
 {
     static void Main()
     {
-        var checker = new NumbersOnlyChecker();
-        string input = "";
+        var checker = new NumbersChecker();
+
         string expectedOutput =
             "1 2 3" + "\r\n" +
             "1200.000" + "\r\n" +
@@ -31,7 +32,18 @@ class NumbersOnlyCheckerTest
             "\r\n" + "----------------" + "\r\n" +
             "Ресто: -12.00" + "\r\n" +
             "4 5 6";
+        TestChecker(checker, expectedOutput, userOutput);
+
+        TestChecker(checker, 
+            expectedOutput: "error", 
+            userOutput: "Syntax Error!");
+    }
+
+    private static void TestChecker(IChecker checker, string expectedOutput, string userOutput)
+    {
+        var input = "";
         var result = checker.Check(input, userOutput, expectedOutput, false);
+
         Console.WriteLine("Correct: " + result.IsCorrect);
         if (!result.IsCorrect)
         {
@@ -41,5 +53,6 @@ class NumbersOnlyCheckerTest
             Console.WriteLine("Expected output:");
             Console.WriteLine(result.CheckerDetails.ExpectedOutputFragment);
         }
+
     }
 }

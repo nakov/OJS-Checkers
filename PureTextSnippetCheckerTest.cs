@@ -2,7 +2,7 @@
 
 class PureTextSnippetCheckerTest
 {
-    static void Main()
+    static void Main3()
     {
         var checker = new PureTextSnippetChecker();
         string input = "";

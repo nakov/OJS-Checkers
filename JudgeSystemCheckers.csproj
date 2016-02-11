@@ -46,12 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LastNumberOnlyChecker.cs" />
-    <Compile Include="LastNumberOnlyCheckerTest.cs" />
+    <Compile Include="LastNumberChecker.cs" />
+    <Compile Include="LastNumberCheckerTest.cs" />
     <Compile Include="PureTextSnippetCheckerTest.cs" />
-    <Compile Include="NumbersOnlyCheckerTest.cs" />
+    <Compile Include="NumbersCheckerTest.cs" />
     <Compile Include="PureTextSnippetChecker.cs" />
-    <Compile Include="NumbersOnlyChecker.cs" />
+    <Compile Include="NumbersChecker.cs" />
     <Compile Include="AcceptEverythingChecker.cs" />
     <Compile Include="GuessTheNameChecker.cs" />
     <Compile Include="OJS.Workers.Common\CheckerDetails.cs" />
