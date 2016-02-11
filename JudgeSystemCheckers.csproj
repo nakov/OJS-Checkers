@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CheckerTest.cs" />
+    <Compile Include="PureTextCheckerTest.cs" />
+    <Compile Include="NumbersOnlyCheckerTest.cs" />
+    <Compile Include="PureTextChecker.cs" />
     <Compile Include="NumbersOnlyChecker.cs" />
     <Compile Include="AcceptEverythingChecker.cs" />
     <Compile Include="GuessTheNameChecker.cs" />

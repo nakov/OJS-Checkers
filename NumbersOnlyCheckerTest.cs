@@ -1,9 +1,8 @@
-﻿
-using System;
+﻿using System;
 
-class CheckerTest
+class NumbersOnlyCheckerTest
 {
-    static void Main()
+    static void Main2()
     {
         var checker = new NumbersOnlyChecker();
         string input = "";
