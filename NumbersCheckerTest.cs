@@ -3,7 +3,7 @@ using System;
 
 class NumbersCheckerTest
 {
-    static void Main()
+    static void Main2()
     {
         var checker = new NumbersChecker();
 
@@ -32,6 +32,7 @@ class NumbersCheckerTest
             "\r\n" + "----------------" + "\r\n" +
             "Ресто: -12.00" + "\r\n" +
             "4 5 6";
+
         TestChecker(checker, expectedOutput, userOutput);
 
         TestChecker(checker, 
@@ -53,6 +54,5 @@ class NumbersCheckerTest
             Console.WriteLine("Expected output:");
             Console.WriteLine(result.CheckerDetails.ExpectedOutputFragment);
         }
-
     }
 }

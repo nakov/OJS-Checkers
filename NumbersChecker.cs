@@ -20,7 +20,7 @@ public class NumbersChecker : IChecker
 
         if (receivedNumbers.Length != expectedNumbers.Length)
         {
-            // Different line numbers --> incorrect result
+            // Different number of lines --> incorrect result
             string differenceText = (receivedNumbers.Length < expectedNumbers.Length) ? "less" : "greater";
             return new CheckerResult()
             {
@@ -28,14 +28,14 @@ public class NumbersChecker : IChecker
                 ResultType = CheckerResultType.WrongAnswer,
                 CheckerDetails = new CheckerDetails()
                 {
-                    Comment = "The count of numbers in the user output is " + differenceText + " than the expected output.",
+                    Comment = "The number of numbers in the user output is " + differenceText + " than the expected output.",
                     UserOutputFragment = string.Join("\r\n", receivedNumbers),
                     ExpectedOutputFragment = string.Join("\r\n", expectedNumbers)
                 }
             };
         }
 
-        // Scan for differences line by line (number by number)
+        // Scan for differences number by number (line by line)
         for (int i = 0; i < receivedNumbers.Length; i++)
         {
             bool equalNums;
