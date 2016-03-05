@@ -3,7 +3,7 @@ using OJS.Workers.Common;
 
 class TextSnippetCheckerTest
 {
-    static void Main()
+    static void Main7()
     {
         var checker = new TextSnippetChecker();
 

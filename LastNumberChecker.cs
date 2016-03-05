@@ -7,6 +7,8 @@ using OJS.Workers.Common;
 
 public class LastNumberChecker : IChecker
 {
+    const double DecimalPrecision = 0.01;
+
     public CheckerResult Check(string inputData, string receivedOutput,
         string expectedOutput, bool isTrialTest)
     {
@@ -55,7 +57,7 @@ public class LastNumberChecker : IChecker
         {
             var numReceived = double.Parse(lastReceivedNum, CultureInfo.InvariantCulture);
             var numExpected = double.Parse(expectedNum, CultureInfo.InvariantCulture);
-            equalNums = Math.Abs(numReceived - numExpected) < 0.001;
+            equalNums = Math.Abs(numReceived - numExpected) < DecimalPrecision;
         }
         catch (Exception)
         {
@@ -71,7 +73,7 @@ public class LastNumberChecker : IChecker
                 ResultType = CheckerResultType.WrongAnswer,
                 CheckerDetails = new CheckerDetails()
                 {
-                    Comment = "The last number in the user output does not match the expected output.",
+                    Comment = "The last number in the user output '" + lastReceivedNum + "' does not match the expected output '" + expectedNum + "'.",
                     UserOutputFragment = lastReceivedNum,
                     ExpectedOutputFragment = expectedNum
                 }

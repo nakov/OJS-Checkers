@@ -7,6 +7,8 @@ using System.Globalization;
 
 public class NumbersChecker : IChecker
 {
+    const double DecimalPrecision = 0.01;
+
     public CheckerResult Check(string inputData, string receivedOutput,
         string expectedOutput, bool isTrialTest)
     {
@@ -43,7 +45,7 @@ public class NumbersChecker : IChecker
             {
                 var numReceived = double.Parse(receivedNumbers[i], CultureInfo.InvariantCulture);
                 var numExpected = double.Parse(expectedNumbers[i], CultureInfo.InvariantCulture);
-                equalNums = Math.Abs(numReceived - numExpected) < 0.001;
+                equalNums = Math.Abs(numReceived - numExpected) < DecimalPrecision;
             }
             catch (Exception)
             {

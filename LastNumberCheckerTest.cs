@@ -4,7 +4,7 @@ using OJS.Workers.Common;
 
 class LastNumberCheckerTest
 {
-    static void Main3()
+    static void Main2()
     {
         var checker = new LastNumberChecker();
 
@@ -13,10 +13,10 @@ class LastNumberCheckerTest
             "num[0] =" + "\r\n" +
             "num[1] =" + "\r\n" +
             "num[2] =" + "\r\n" +
-            "Резултатът е: 500" + "\r\n" +
+            "Резултатът е: 500.26" + "\r\n" +
             "Довиждане!" + "\r\n";
         string expectedOutput =
-            "500";
+            "500.255555555555555";
 
         TestChecker(checker, expectedOutput, userOutput);
 

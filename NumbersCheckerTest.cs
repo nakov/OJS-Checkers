@@ -3,7 +3,7 @@ using System;
 
 class NumbersCheckerTest
 {
-    static void Main2()
+    static void Main()
     {
         var checker = new NumbersChecker();
 
@@ -16,6 +16,8 @@ class NumbersCheckerTest
             "3.14159" + " " +
             "1.23e-1 1.23e+2 1.23e3" + " " +
             "-12.000" + "\r\n" +
+            "55.5555555555556" + "\r\n" +
+            "12.5789999999999" + "\r\n" +
             "4 5 6";
         string userOutput =
             "1 2 3 Това е най-якото решение!\r\n" +
@@ -31,6 +33,8 @@ class NumbersCheckerTest
             "Пи = 1230" + "\r\n" +
             "\r\n" + "----------------" + "\r\n" +
             "Ресто: -12.00" + "\r\n" +
+            "Лице: 55.56" + "\r\n" +
+            "Периметър: 12.57" + "\r\n" +
             "4 5 6";
 
         TestChecker(checker, expectedOutput, userOutput);
